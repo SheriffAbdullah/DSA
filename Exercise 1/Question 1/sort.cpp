@@ -25,7 +25,7 @@ int findMaxIdx(const int[], const int);
 bool isInvalidInput();
 
 // ====== Array Utilities ======
-int getArraySizeInput();
+int getArrayLengthInput();
 int* getArrayInput(const int);
 int* deepCopyArray(const int[], const int);
 
@@ -38,16 +38,16 @@ void insertionSort(int[], const int, bool desc=false);
 void selectionSort(int[], const int, bool desc=false);
 
 int main() {
-    int size;
+    int length;
     unsigned int user_choice;
     int* arr; int* arr_copy;
 
-    size = getArraySizeInput();
-    arr = getArrayInput(size);
+    length = getArrayLengthInput();
+    arr = getArrayInput(length);
     cout << endl;
     
     do {
-        arr_copy = deepCopyArray(arr, size);
+        arr_copy = deepCopyArray(arr, length);
 
         cout << "1. Bubble Sort" << endl;
         cout << "2. Selection Sort" << endl;
@@ -70,18 +70,18 @@ int main() {
 
         switch(user_choice) {
             case 1:
-                bubbleSort(arr, size);
-                printArray(arr, size);
+                bubbleSort(arr, length);
+                printArray(arr, length);
                 cout << endl;
                 break;
             case 2:
-                selectionSort(arr, size);
-                printArray(arr, size);
+                selectionSort(arr, length);
+                printArray(arr, length);
                 cout << endl;
                 break;
             case 3:
-                insertionSort(arr, size);
-                printArray(arr, size);
+                insertionSort(arr, length);
+                printArray(arr, length);
                 cout << endl;
                 break;
             case 4:
@@ -121,30 +121,30 @@ void swapIntegers(int* ptr1, int* ptr2) {
  * @brief Returns the index of the minimum element in the array.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Index of the minimum element in the array.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * int index = findMinIdx(arr, 5); // Returns 1
  * @endcode
  */
-int findMinIdx(const int arr[], const int size) {
+int findMinIdx(const int arr[], const int length) {
     if (!arr) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
-    if (size == 1) {
+    if (length == 1) {
         return 0;
     }
     
     int min_idx = 0;
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         if (arr[i] < arr[min_idx]) {
             min_idx = i;
         }
@@ -157,30 +157,30 @@ int findMinIdx(const int arr[], const int size) {
  * @brief Returns the index of the maximum element in the array.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Index of the maximum element in the array.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * int index = findMaxIdx(arr, 5); // Returns 0
  * @endcode
  */
-int findMaxIdx(const int arr[], const int size) {
+int findMaxIdx(const int arr[], const int length) {
     if (!arr) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
-    if (size == 1) {
+    if (length == 1) {
         return 0;
     }
     
     int max_idx = 0;
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         if (arr[i] > arr[max_idx]) {
             max_idx = i;
         }
@@ -220,27 +220,27 @@ bool isInvalidInput() {
 }
 
 /**
- * @brief Returns a value for size of an array and validates input.
+ * @brief Returns a value for length of an array and validates input.
  * 
  * @code
- * int size = getArraySizeInput();
+ * int length = getArrayLengthInput();
  * 
- * // Output: "Enter a positive array size: 5" 
+ * // Output: "Enter a positive array length: 5" 
  * // Returns 5
  * @endcode
  */
-int getArraySizeInput() {
-    int size;
+int getArrayLengthInput() {
+    int length;
 
     do {
-        cout << "Enter a positive array size: ";
-        cin >> size;
+        cout << "Enter a positive array length: ";
+        cin >> length;
 
-        if (isInvalidInput() || size < 1) {
+        if (isInvalidInput() || length < 1) {
             cout << "Invalid input. Please enter a valid integer greater than (0)." << endl;
         }
         else {
-            return size;
+            return length;
         }
     } while (true);
 }
@@ -248,40 +248,40 @@ int getArraySizeInput() {
 /**
  * @brief Returns an array and validates its elements.
  * 
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
- * @note @p size must be a non-negative integer.
+ * @note @p length must be a non-negative integer.
  * 
  * @code
- * int size = 5;
- * int* arr = getArrayInput(size);
+ * int length = 5;
+ * int* arr = getArrayInput(length);
  * 
  * // Output: "Enter 5 integers separated by spaces: 5 4 3 2 1" 
  * // Returns {5, 4, 3, 2, 1}
  * @endcode
  */
-int* getArrayInput(const int size) {
-    if (size <= 0) {
+int* getArrayInput(const int length) {
+    if (length <= 0) {
         return nullptr;
     }
 
     int* arr;
 
     try {
-        arr = new int[size];
+        arr = new int[length];
     } catch (const bad_alloc& e) {
         return nullptr;
     }
 
     do {
-        cout << "Enter " << size << " integers separated by spaces: ";
+        cout << "Enter " << length << " integers separated by spaces: ";
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < length; i++) {
             cin >> arr[i];
         }
 
         if (isInvalidInput()) {
-            cout << "Invalid input. Enter only " << size << " integers separated by spaces." << endl;
+            cout << "Invalid input. Enter only " << length << " integers separated by spaces." << endl;
         }
         else {
             return arr;
@@ -293,34 +293,34 @@ int* getArrayInput(const int size) {
  * @brief Returns a copy of an array. 
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Pointer to a copy of the array.
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * int arr_copy = deepCopyArray(arr, 5); // arr_copy = {5, 1, 2, 3, 4}
  * @endcode
  */
-int* deepCopyArray(const int arr[], const int size) {
+int* deepCopyArray(const int arr[], const int length) {
     if (!arr) {
         return nullptr;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return nullptr;
     }
 
     int* arr_copy;
 
     try {
-        arr_copy = new int[size];
+        arr_copy = new int[length];
     } catch (const bad_alloc& e) {
         return nullptr;
     }
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         arr_copy[i] = arr[i];
     }
 
@@ -331,29 +331,29 @@ int* deepCopyArray(const int arr[], const int size) {
  * @brief Prints the elements in an array.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * printArray(arr, 5) // Output: "Array elements: 5 1 2 3 4"
  * @endcode
  */
-void printArray(const int arr[], const int size) {
+void printArray(const int arr[], const int length) {
     if (!arr) {
         return;
     }
-    if (size < 0) {
+    if (length < 0) {
         return;
     }
-    if (size == 0) {
+    if (length == 0) {
         cout << "Array is empty." << endl;
     }
 
     cout << "Array elements: ";
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         cout << arr[i] << ' ';
     }
     cout << endl;
@@ -363,10 +363,10 @@ void printArray(const int arr[], const int size) {
  * @brief Sorts the array in ascending order using Bubble sort algorithm.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, sorts the array in descending order; otherwise, sorts it in ascending order. (default=false)
  * 
- * @note arr must be a non-null pointer, and size must be a non-negative integer.
+ * @note arr must be a non-null pointer, and length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -379,19 +379,19 @@ void printArray(const int arr[], const int size) {
  * @endcode
  */
 
-void bubbleSort(int arr[], const int size, const bool desc) {
+void bubbleSort(int arr[], const int length, const bool desc) {
     /*
     In-place Bubble sort.
     */
     if (!arr) {
         return;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return;
     }
 
-    for (int i = 0; i < size-1; i++) {
-        for (int j = 0; j < size-i-1; j++) {
+    for (int i = 0; i < length-1; i++) {
+        for (int j = 0; j < length-i-1; j++) {
             if (desc ? arr[j] < arr[j+1] : arr[j] > arr[j+1]) {
                 swapIntegers(&arr[j], &arr[j+1]);
             }
@@ -403,10 +403,10 @@ void bubbleSort(int arr[], const int size, const bool desc) {
  * @brief Sorts the array in ascending order using Selection sort algorithm.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, sorts the array in descending order; otherwise, sorts it in ascending order. (default=false)
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -418,24 +418,24 @@ void bubbleSort(int arr[], const int size, const bool desc) {
  * // Sorted array: 5 4 3 2 1
  * @endcode
  */
-void selectionSort(int arr[], const int size, const bool desc) {
+void selectionSort(int arr[], const int length, const bool desc) {
     /*
     In-place Selection sort.
     */
     if (!arr) {
         return;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return;
     }
 
     int swapIdx;
 
-    for (int i = 0; i < size-1; i++) {
+    for (int i = 0; i < length-1; i++) {
         if (desc) {
-            swapIdx = findMaxIdx(arr+i, size-i) + i;
+            swapIdx = findMaxIdx(arr+i, length-i) + i;
         } else {
-            swapIdx = findMinIdx(arr+i, size-i) + i;
+            swapIdx = findMinIdx(arr+i, length-i) + i;
         }
 
         swapIntegers(&arr[swapIdx], &arr[i]);
@@ -446,10 +446,10 @@ void selectionSort(int arr[], const int size, const bool desc) {
  * @brief Sorts the array in ascending order using Insertion sort algorithm.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, sorts the array in descending order; otherwise, sorts it in ascending order. (default=false)
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -461,18 +461,18 @@ void selectionSort(int arr[], const int size, const bool desc) {
  * // Sorted array: 5 4 3 2 1
  * @endcode
  */
-void insertionSort(int arr[], const int size, const bool desc) {
+void insertionSort(int arr[], const int length, const bool desc) {
     /*
     In-place Insertion sort.
     */
     if (!arr) {
         return;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return;
     }
 
-    for (int i = 1; i < size; i++) {
+    for (int i = 1; i < length; i++) {
         for (int j = i; j > 0; j--) {
             if (desc ? arr[j] < arr[j-1] : arr[j] > arr[j-1]) {
                 break;

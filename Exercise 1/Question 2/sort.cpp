@@ -52,30 +52,30 @@ void swapIntegers(int* ptr1, int* ptr2) {
  * @brief Returns the index of the minimum element in the array.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Index of the minimum element in the array.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * int index = findMinIdx(arr, 5); // Returns 1
  * @endcode
  */
-int findMinIdx(const int arr[], const int size) {
+int findMinIdx(const int arr[], const int length) {
     if (!arr) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
-    if (size == 1) {
+    if (length == 1) {
         return 0;
     }
     
     int min_idx = 0;
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         if (arr[i] < arr[min_idx]) {
             min_idx = i;
         }
@@ -88,30 +88,30 @@ int findMinIdx(const int arr[], const int size) {
  * @brief Returns the index of the maximum element in the array.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Index of the maximum element in the array.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * int index = findMaxIdx(arr, 5); // Returns 0
  * @endcode
  */
-int findMaxIdx(const int arr[], const int size) {
+int findMaxIdx(const int arr[], const int length) {
     if (!arr) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
-    if (size == 1) {
+    if (length == 1) {
         return 0;
     }
     
     int max_idx = 0;
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         if (arr[i] > arr[max_idx]) {
             max_idx = i;
         }
@@ -124,10 +124,10 @@ int findMaxIdx(const int arr[], const int size) {
  * @brief Sorts the array in ascending order using Bubble sort algorithm.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, sorts the array in descending order; otherwise, sorts it in ascending order. (default=false)
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -139,19 +139,19 @@ int findMaxIdx(const int arr[], const int size) {
  * // Sorted array: 5 4 3 2 1
  * @endcode
  */
-void bubbleSort(int arr[], const int size, const bool desc) {
+void bubbleSort(int arr[], const int length, const bool desc) {
     /*
     In-place Bubble sort.
     */
     if (!arr) {
         return;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return;
     }
 
-    for (int i = 0; i < size-1; i++) {
-        for (int j = 0; j < size-i-1; j++) {
+    for (int i = 0; i < length-1; i++) {
+        for (int j = 0; j < length-i-1; j++) {
             if (desc ? arr[j] < arr[j+1] : arr[j] > arr[j+1]) {
                 swapIntegers(&arr[j], &arr[j+1]);
             }
@@ -163,10 +163,10 @@ void bubbleSort(int arr[], const int size, const bool desc) {
  * @brief Sorts the array in ascending order using Selection sort algorithm.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, sorts the array in descending order; otherwise, sorts it in ascending order. (default=false)
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -178,24 +178,24 @@ void bubbleSort(int arr[], const int size, const bool desc) {
  * // Sorted array: 5 4 3 2 1
  * @endcode
  */
-void selectionSort(int arr[], const int size, const bool desc) {
+void selectionSort(int arr[], const int length, const bool desc) {
     /*
     In-place Selection sort.
     */
     if (!arr) {
         return;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return;
     }
 
     int swapIdx;
 
-    for (int i = 0; i < size-1; i++) {
+    for (int i = 0; i < length-1; i++) {
         if (desc) {
-            swapIdx = findMaxIdx(arr+i, size-i) + i;
+            swapIdx = findMaxIdx(arr+i, length-i) + i;
         } else {
-            swapIdx = findMinIdx(arr+i, size-i) + i;
+            swapIdx = findMinIdx(arr+i, length-i) + i;
         }
 
         swapIntegers(&arr[swapIdx], &arr[i]);
@@ -206,10 +206,10 @@ void selectionSort(int arr[], const int size, const bool desc) {
  * @brief Sorts the array in ascending order using Insertion sort algorithm.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, sorts the array in descending order; otherwise, sorts it in ascending order. (default=false)
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -221,18 +221,18 @@ void selectionSort(int arr[], const int size, const bool desc) {
  * // Sorted array: 5 4 3 2 1
  * @endcode
  */
-void insertionSort(int arr[], const int size, const bool desc) {
+void insertionSort(int arr[], const int length, const bool desc) {
     /*
     In-place Insertion sort.
     */
     if (!arr) {
         return;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return;
     }
 
-    for (int i = 1; i < size; i++) {
+    for (int i = 1; i < length; i++) {
         for (int j = i; j > 0; j--) {
             if (desc ? arr[j] < arr[j-1] : arr[j] > arr[j-1]) {
                 break;

@@ -21,7 +21,7 @@ bool isInvalidInput();
 int isSorted(const int [], const int, const bool);
 
 // ====== Array Utilities ======
-int getArraySizeInput();
+int getArrayLengthInput();
 int* getArrayInput(const int);
 int* deepCopyArray(const int[], const int);
 
@@ -37,16 +37,16 @@ int linearSearch(const int, const int [], const int);
 
 
 int main() {
-    int size, value, idx;
+    int length, value, idx;
     unsigned int user_choice;
     int* arr; int* arr_copy;
 
-    size = getArraySizeInput();
-    arr = getArrayInput(size);
+    length = getArrayLengthInput();
+    arr = getArrayInput(length);
     cout << endl;
     
     do {
-        arr_copy = deepCopyArray(arr, size);
+        arr_copy = deepCopyArray(arr, length);
 
         cout << "1. Linear Search" << endl;
         cout << "2. Binary Search" << endl;
@@ -69,7 +69,7 @@ int main() {
         switch(user_choice) {
             case 1:
                 value = getIntegerInput();
-                idx = linearSearch(value, arr, size);
+                idx = linearSearch(value, arr, length);
 
                 if (idx >= 0) {
                     cout << value << " found at index " << idx << endl;
@@ -78,20 +78,20 @@ int main() {
                     cout << value << " not found." << endl;
                 } 
                 else if (idx == -2) {
-                    cout << "Error: Invalid input. The array is either null or size is a non-positive integer." << endl;
+                    cout << "Error: Invalid input. The array is either null or length is a non-positive integer." << endl;
                 } 
                 cout << endl;
                 break;
 
             case 2:
-                printArray(arr_copy, size);
+                printArray(arr_copy, length);
                 cout << "Sorting the array. Binary search requires a sorted array." << endl;
-                selectionSort(arr_copy, size);
-                printArray(arr_copy, size);
+                selectionSort(arr_copy, length);
+                printArray(arr_copy, length);
                 cout << endl;
 
                 value = getIntegerInput();
-                idx = binarySearch(value, arr_copy, size);
+                idx = binarySearch(value, arr_copy, length);
 
                 if (idx >= 0) {
                     cout << value << " found at index " << idx << endl;
@@ -100,7 +100,7 @@ int main() {
                     cout << value << " not found." << endl;
                 }
                 else if (idx == -2) {
-                    cout << "Error: Invalid input. The array is either null or size is a non-positive integer." << endl;
+                    cout << "Error: Invalid input. The array is either null or length is a non-positive integer." << endl;
                 }
                 else if (idx == -3) {
                     cout << "Error: Invalid input. The array is not sorted in ascending order." << endl;
@@ -150,11 +150,11 @@ bool isInvalidInput() {
  * @brief Checks whether the array is sorted or not.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * @param desc If true, checks whether the array is sorted in descending order; otherwise, ascending order.
  * 
  * @return Index of the maximum element in the array.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -165,15 +165,15 @@ bool isInvalidInput() {
  * isSorted(sorted_arr, 5, true); // Returns 0
  * @endcode
  */
-int isSorted(const int arr[], const int size, const bool desc=false) {
+int isSorted(const int arr[], const int length, const bool desc=false) {
     if (arr == NULL) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
 
-    for (int i = 1; i < size; i++) {
+    for (int i = 1; i < length; i++) {
         if (desc ? arr[i] > arr[i-1] : arr[i] < arr[i-1]) return 0;
     }
 
@@ -181,27 +181,27 @@ int isSorted(const int arr[], const int size, const bool desc=false) {
 }
 
 /**
- * @brief Returns a value for size of an array and validates input.
+ * @brief Returns a value for length of an array and validates input.
  * 
  * @code
- * int size = getArraySizeInput();
+ * int length = getArrayLengthInput();
  * 
- * // Output: "Enter a positive array size: 5" 
+ * // Output: "Enter a positive array length: 5" 
  * // Returns 5
  * @endcode
  */
-int getArraySizeInput() {
-    int size;
+int getArrayLengthInput() {
+    int length;
 
     do {
-        cout << "Enter a positive array size: ";
-        cin >> size;
+        cout << "Enter a positive array length: ";
+        cin >> length;
 
-        if (isInvalidInput() || size < 1) {
+        if (isInvalidInput() || length < 1) {
             cout << "Invalid input. Please enter a valid integer greater than (0)." << endl;
         }
         else {
-            return size;
+            return length;
         }
     } while (true);
 }
@@ -209,40 +209,40 @@ int getArraySizeInput() {
 /**
  * @brief Returns an array and validates its elements.
  * 
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
- * @note @p size must be a non-negative integer.
+ * @note @p length must be a non-negative integer.
  * 
  * @code
- * int size = 5;
- * int* arr = getArrayInput(size);
+ * int length = 5;
+ * int* arr = getArrayInput(length);
  * 
  * // Output: "Enter 5 integers separated by spaces: 5 4 3 2 1" 
  * // Returns {5, 4, 3, 2, 1}
  * @endcode
  */
-int* getArrayInput(const int size) {
-    if (size <= 0) {
+int* getArrayInput(const int length) {
+    if (length <= 0) {
         return nullptr;
     }
 
     int* arr;
 
     try {
-        arr = new int[size];
+        arr = new int[length];
     } catch (const bad_alloc& e) {
         return nullptr;
     }
 
     do {
-        cout << "Enter " << size << " integers separated by spaces: ";
+        cout << "Enter " << length << " integers separated by spaces: ";
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < length; i++) {
             cin >> arr[i];
         }
 
         if (isInvalidInput()) {
-            cout << "Invalid input. Enter only " << size << " integers separated by spaces." << endl;
+            cout << "Invalid input. Enter only " << length << " integers separated by spaces." << endl;
         }
         else {
             return arr;
@@ -254,34 +254,34 @@ int* getArrayInput(const int size) {
  * @brief Returns a copy of an array. 
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Pointer to a copy of the array.
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * int arr_copy = deepCopyArray(arr, 5); // arr_copy = {5, 1, 2, 3, 4}
  * @endcode
  */
-int* deepCopyArray(const int arr[], const int size) {
+int* deepCopyArray(const int arr[], const int length) {
     if (!arr) {
         return nullptr;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return nullptr;
     }
 
     int* arr_copy;
 
     try {
-        arr_copy = new int[size];
+        arr_copy = new int[length];
     } catch (const bad_alloc& e) {
         return nullptr;
     }
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         arr_copy[i] = arr[i];
     }
 
@@ -318,29 +318,29 @@ int getIntegerInput() {
  * @brief Prints the elements in an array.
  * 
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
- * @note @p arr must be a non-null pointer, and @p size must be a non-negative integer.
+ * @note @p arr must be a non-null pointer, and @p length must be a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
  * printArray(arr, 5) // Output: "Array elements: 5 1 2 3 4"
  * @endcode
  */
-void printArray(const int arr[], const int size) {
+void printArray(const int arr[], const int length) {
     if (!arr) {
         return;
     }
-    if (size < 0) {
+    if (length < 0) {
         return;
     }
-    if (size == 0) {
+    if (length == 0) {
         cout << "Array is empty." << endl;
     }
 
     cout << "Array elements: ";
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         cout << arr[i] << ' ';
     }
     cout << endl;
@@ -351,10 +351,10 @@ void printArray(const int arr[], const int size) {
  * 
  * @param value Number to be searched in the array.
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Index of @p value in the array, if found; otherwise, -1.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * 
  * @code
  * int arr[] = {5, 1, 2, 3, 4};
@@ -363,15 +363,15 @@ void printArray(const int arr[], const int size) {
  * linearSearch(6, arr, 5); // Returns -1
  * @endcode
  */
-int linearSearch(const int value, const int arr[], const int size) {
+int linearSearch(const int value, const int arr[], const int length) {
     if (arr == NULL) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < length; i++) {
         if (arr[i] == value) return i;
     }
 
@@ -383,10 +383,10 @@ int linearSearch(const int value, const int arr[], const int size) {
  * 
  * @param value Number to be searched in the array.
  * @param arr Pointer to the array.
- * @param size Number of elements in the array.
+ * @param length Number of elements in the array.
  * 
  * @return Index of @p value in the array, if found; otherwise, -1.
- * @return -2, if @p arr is null or if @p size is a non-negative integer.
+ * @return -2, if @p arr is null or if @p length is a non-negative integer.
  * @return -3, if @p arr is not sorted in ascending order.
  * 
  * @code
@@ -398,24 +398,24 @@ int linearSearch(const int value, const int arr[], const int size) {
  * binarySearch(6, sorted_arr, 5); // Returns -1
  * @endcode
  */
-int binarySearch(const int value, const int arr[], const int size) {
+int binarySearch(const int value, const int arr[], const int length) {
     if (arr == NULL) {
         return -2;
     }
-    if (size <= 0) {
+    if (length <= 0) {
         return -2;
     }
-    if (!isSorted(arr, size)) {
+    if (!isSorted(arr, length)) {
         return -3;
     }
 
-    if (value > arr[size-1] || value < arr[0]) {
+    if (value > arr[length-1] || value < arr[0]) {
         return -1;
     }
 
     int left_idx, mid_idx, right_idx;
     left_idx = 0;
-    right_idx = size - 1;
+    right_idx = length - 1;
 
     do {
         mid_idx = left_idx + ((right_idx - left_idx) / 2);
